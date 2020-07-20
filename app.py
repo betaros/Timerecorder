@@ -1,14 +1,19 @@
 from flask import Flask
-from flask_restplus import Resource, Api
+from flask_restplus import Resource, Api, fields
+
+from src.TimeRecording import TimeRecordingService
 
 app = Flask(__name__)
 api = Api(app)
 
 ns_frontend = api.namespace('Frontend', description='Frontend operations')
-ns_begin = api.namespace('Begin', description='Begin operations')
-ns_lunch = api.namespace('Lunch', description='Lunch operations')
-ns_end = api.namespace('End', description='End operations')
 ns_element = api.namespace('Element', description='Element operations')
+
+day_element_model = api.model('DayElement', {
+    'begin': fields.datetime,
+    'lunch': fields.Integer,
+    'end': fields.datetime
+})
 
 
 @ns_frontend.route('/')
@@ -18,67 +23,23 @@ class Frontend(Resource):
         return 'Hello World!'
 
 
-@ns_begin.route('/begin')
-class BeginElement(Resource):
+@ns_element.route('/day')
+class DayElement(Resource):
 
-    def post(self):
+    def post(self, day_element):
+        TimeRecordingService.add_element(day_element)
         return 'Hello World!'
 
-    def get(self):
+    def get(self, element_id):
+        TimeRecordingService.show_element(element_id)
         return 'Hello World!'
 
-    def put(self):
+    def put(self, element_id, day_element):
+        TimeRecordingService.edit_element(element_id, day_element)
         return 'Hello World!'
 
-    def delete(self):
-        return 'Hello World!'
-
-
-@ns_lunch.route('/lunch')
-class LunchElement(Resource):
-
-    def post(self):
-        return 'Hello World!'
-
-    def get(self):
-        return 'Hello World!'
-
-    def put(self):
-        return 'Hello World!'
-
-    def delete(self):
-        return 'Hello World!'
-
-
-@ns_end.route('/end')
-class EndElement(Resource):
-
-    def post(self):
-        return 'Hello World!'
-
-    def get(self):
-        return 'Hello World!'
-
-    def put(self):
-        return 'Hello World!'
-
-    def delete(self):
-        return 'Hello World!'
-
-
-@ns_element.route('/element')
-class EndElement(Resource):
-
-    def post(self):
-        return 'Hello World!'
-
-    def get(self):
-        return 'Hello World!'
-
-    def put(self):
-        return 'Hello World!'
-
-    def delete(self):
+    def delete(self, element_id):
+        TimeRecordingService.delete_element(element_id)
         return 'Hello World!'
 
 

@@ -79,6 +79,21 @@ def add_end_date(time: datetime):
     conn.close()
 
 
-add_begin_date(datetime.datetime.now())
-add_begin_date(datetime.datetime.now())
-add_begin_date(datetime.datetime.now())
+def edit_begin_date(id, param):
+    return None
+
+
+def edit_lunch_time(id, param):
+    return None
+
+
+def edit_end_date(id, param):
+    return None
+
+
+def delete_element(id):
+    return None
+
+
+def get_element(id):
+    return None
